@@ -42,6 +42,12 @@ if ( $_FILES["file"]["type"] != 'text/xml' && $_FILES["file"]["type"] != 'applic
         echo "<p>Формат файла обновления не верен</p>";
         exit();
     }
+    
+//Проверяем наличие папки для загрузки,в случае отсутствия создаем
+if (!is_dir("uploads"))
+{
+   mkdir("uploads", 0700);
+}     
 
 //загрузка файла на сервер
 $uploaddir = 'uploads/';
