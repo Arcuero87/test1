@@ -26,10 +26,26 @@ if ( $_FILES["file"]["type"] != 'text/xml')
         exit();
     }
 
+//Проверяем наличие папки для загрузки,в случае отсутствия создаем
+if (!is_dir("uploads"))
+{
+   mkdir("uploads", 0700);
+} 
+	
+	
+//загрузка файла на сервер
+$uploaddir = 'uploads/';
+$file = basename($_FILES['file']['name']);
+$uploadfile = $uploaddir . $file;
+move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile);
+
+
+
+
 //Проводим валидацию загруженного файла
 $dom = new DOMDocument;
 $dom->validateOnParse = true;
-$dom->Load($_FILES['file']['name']);
+$dom->Load($uploadfile);
 	
 // Параметры соединения с базой данных
 require_once 'connector.php';
